@@ -1,0 +1,488 @@
+@prefix : <http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationSetup#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
+
+:organization_collaboration_with_persons_on_publications a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Organization Collaboration with persons on publications" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?publicationCount ?personLabel
+WHERE {
+  {
+    SELECT DISTINCT ?organization (COUNT(DISTINCT ?publication) as ?publicationCount) ?person2
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position1 .
+      ?position1 vivo:relates ?person1 .
+      ?person1 a foaf:Person .
+      ?person1 vivo:relatedBy/vivo:relates ?publication .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      OPTIONAL {
+        ?position1 vivo:dateTimeInterval ?dti1 .
+        ?dti1 vivo:start/vivo:dateTime ?position1StartDT .
+        OPTIONAL {
+          ?dti1 vivo:end/vivo:dateTime ?position1EndDT .
+        }
+      }
+      FILTER(!BOUND(?position1StartDT) || ?position1StartDT <= ?publicationDT)
+      FILTER(!BOUND(?position1EndDT) || ?position1EndDT >= ?publicationDT)
+      ?person2 vivo:relatedBy/vivo:relates ?publication .
+      ?person2 a foaf:Person .
+      FILTER(?person1 != ?person2)
+      ?position2 vivo:relates ?person2 .
+      ?position2 a vivo:Position .
+      ?publication a ?publicationType .
+      OPTIONAL {
+        ?position2 vivo:dateTimeInterval ?dti2 .
+        ?dti2 vivo:start/vivo:dateTime ?position2StartDT .
+        OPTIONAL {
+          ?dti2 vivo:end/vivo:dateTime ?position2EndDT .
+        }
+      }
+      FILTER(!BOUND(?position2StartDT) || ?position2StartDT <= ?publicationDT)
+      FILTER(!BOUND(?position2EndDT) || ?position2EndDT >= ?publicationDT)
+      FILTER NOT EXISTS {
+        ?organization obo:BFO_0000051*/vivo:relatedBy  ?position2 
+      }
+    } GROUP BY ?organization ?person2
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?person2 rdfs:label ?personLabel .
+}  ORDER BY ?orgLabel DESC(?publicationCount) ?personLabel
+""" ;
+   :resultFormat "CSV" .
+
+:organization_collaboration_with_persons_on_grants a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Organization Collaboration with persons on grants" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?grantCount ?personLabel
+WHERE {
+  {
+    SELECT DISTINCT ?organization ?person2 (COUNT(DISTINCT ?grant) as ?grantCount) 
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position1 .
+      ?position1 a vivo:Position .
+      ?position1 vivo:relates ?person1 .
+      ?person1 a foaf:Person .
+      ?person1 obo:RO_0000053/vivo:relatedBy ?grant .
+      ?grant a vivo:Grant .
+      ?person2 obo:RO_0000053/vivo:relatedBy ?grant .
+      ?person2 a foaf:Person .
+      FILTER(?person1 != ?person2)
+      ?position2 vivo:relates ?person2 .
+      ?position2 a vivo:Position .
+      ?grant vivo:dateTimeInterval ?dti .
+      ?dti vivo:start/vivo:dateTime ?startTime .
+      ?dti vivo:end/vivo:dateTime ?endTime .
+      OPTIONAL {
+        ?position1 vivo:dateTimeInterval ?dti1 .
+        ?dti1 vivo:start/vivo:dateTime ?position1StartDT .
+        OPTIONAL {
+          ?dti1 vivo:end/vivo:dateTime ?position1EndDT .
+        }
+      }
+      FILTER(!BOUND(?position1StartDT) || ?position1StartDT <= ?endTime)
+      FILTER(!BOUND(?position1EndDT) || ?position1EndDT >= ?startTime)
+      OPTIONAL {
+        ?position2 vivo:dateTimeInterval ?dti2 .
+        ?dti2 vivo:start/vivo:dateTime ?position2StartDT .
+        OPTIONAL {
+          ?dti2 vivo:end/vivo:dateTime ?position2EndDT .
+        }
+      }
+      FILTER(!BOUND(?position2StartDT) || ?position2StartDT <= ?endTime)
+      FILTER(!BOUND(?position2EndDT) || ?position2EndDT >= ?startTime)
+      FILTER NOT EXISTS {
+        ?organization obo:BFO_0000051*/vivo:relatedBy ?position2 
+      }
+    } GROUP BY ?organization ?person2
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?person2 rdfs:label ?personLabel .
+} 
+ORDER BY ?orgLabel DESC(?grantCount) ?personLabel
+""" ;
+   :resultFormat "CSV" .
+
+:crossection_research_areas a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Crossection research areas" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?orgLabel ?personLabel ?areaLabel
+WHERE {
+  {
+    SELECT DISTINCT ?organization ?person
+    (COUNT (DISTINCT ?area) as ?areaCount)
+    ( "|" + GROUP_CONCAT(DISTINCT ?area) + "|" as ?areas)
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position .
+      ?position vivo:relates ?person .
+      ?person a foaf:Person .
+      ?person vivo:relatedBy/vivo:relates ?publication .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication a ?publicationType .
+      ?publication vivo:hasSubjectArea ?area .
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      OPTIONAL {
+        ?position vivo:dateTimeInterval ?dti .
+        ?dti vivo:start/vivo:dateTime ?positionStartDT .
+        OPTIONAL {
+          ?dti vivo:end/vivo:dateTime ?positionEndDT .
+        }
+      }
+      FILTER(!BOUND(?positionStartDT) || ?positionStartDT <= ?publicationDT)
+      FILTER(!BOUND(?positionEndDT) || ?positionEndDT >= ?publicationDT)
+    } GROUP BY ?organization ?person
+  }
+  FILTER(?areaCount > 1)
+  ?organization rdfs:label ?orgLabel .
+  ?person rdfs:label ?personLabel .
+  ?area a skos:Concept .
+  FILTER(CONTAINS(?areas, STR(?area))) 
+  ?area rdfs:label ?areaLabel .
+}  ORDER BY ?orgLabel ?personLabel ?areaLabel
+""" ;
+   :resultFormat "CSV" .
+
+:publication_count_over_years_by_organization a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Publication count over years by organization" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?orgLabel ?year ?publicationCount
+WHERE {
+  {
+    SELECT DISTINCT ?organization (COUNT( DISTINCT ?publication) as ?publicationCount) ?year
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position1 .
+      ?position1 vivo:relates ?person1 .
+      ?person1 a foaf:Person .
+      ?person1 vivo:relatedBy/vivo:relates ?publication .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      BIND(YEAR(?publicationDT) as ?year)
+      OPTIONAL {
+        ?position1 vivo:dateTimeInterval ?dti1 .
+        ?dti1 vivo:start/vivo:dateTime ?position1StartDT .
+        OPTIONAL {
+          ?dti1 vivo:end/vivo:dateTime ?position1EndDT .
+        }
+      }
+      FILTER(!BOUND(?position1StartDT) || ?position1StartDT <= ?publicationDT)
+      FILTER(!BOUND(?position1EndDT) || ?position1EndDT >= ?publicationDT)
+      ?publication a ?publicationType .
+    
+    } GROUP BY ?year ?organization 
+  }
+  ?organization rdfs:label ?orgLabel .
+}  ORDER BY ?orgLabel ?year
+""" ;
+   :resultFormat "CSV" .
+
+:person_publications_in_research_areas a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Person publications in research areas" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?personLabel ?areaLabel ?publicationCount 
+WHERE {
+  {
+    SELECT DISTINCT ?organization ?person ?area (COUNT(DISTINCT ?publication) as ?publicationCount) 
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position .
+      ?position vivo:relates ?person .
+      ?person a foaf:Person .
+      ?person vivo:relatedBy/vivo:relates ?publication .
+      ?publication vivo:hasSubjectArea ?area .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication a ?publicationType .
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      OPTIONAL {
+        ?position vivo:dateTimeInterval ?dti .
+        ?dti vivo:start/vivo:dateTime ?positionStartDT .
+        OPTIONAL {
+          ?dti vivo:end/vivo:dateTime ?positionEndDT .
+        }
+      }
+      FILTER(!BOUND(?positionStartDT) || ?positionStartDT <= ?publicationDT)
+      FILTER(!BOUND(?positionEndDT) || ?positionEndDT >= ?publicationDT)
+     
+    } GROUP BY ?organization ?person ?area
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?person rdfs:label ?personLabel .
+  ?area rdfs:label ?areaLabel .
+}  ORDER BY DESC(?publicationCount) ?orgLabel  ?personLabel ?area
+""" ;
+   :resultFormat "CSV" .
+
+:organization_collaboration_with_organizations_on_publications a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Organization Collaboration with organizations on publications" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?publicationCount ?collabOrgLabel
+WHERE {
+  {
+    SELECT DISTINCT ?organization (COUNT(DISTINCT ?publication) as ?publicationCount) ?collabOrg
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position1 .
+      ?position1 vivo:relates ?person1 .
+      ?person1 a foaf:Person .
+      ?person1 vivo:relatedBy/vivo:relates ?publication .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      OPTIONAL {
+        ?position1 vivo:dateTimeInterval ?dti1 .
+        ?dti1 vivo:start/vivo:dateTime ?position1StartDT .
+        OPTIONAL {
+          ?dti1 vivo:end/vivo:dateTime ?position1EndDT .
+        }
+      }
+      FILTER(!BOUND(?position1StartDT) || ?position1StartDT <= ?publicationDT)
+      FILTER(!BOUND(?position1EndDT) || ?position1EndDT >= ?publicationDT)
+      ?person2 vivo:relatedBy/vivo:relates ?publication .
+      ?person2 a foaf:Person .
+      FILTER(?person1 != ?person2)
+      ?position2 vivo:relates ?person2 .
+      ?position2 a vivo:Position .
+      ?publication a ?publicationType .
+      OPTIONAL {
+        ?position2 vivo:dateTimeInterval ?dti2 .
+        ?dti2 vivo:start/vivo:dateTime ?position2StartDT .
+        OPTIONAL {
+          ?dti2 vivo:end/vivo:dateTime ?position2EndDT .
+        }
+      }
+      FILTER(!BOUND(?position2StartDT) || ?position2StartDT <= ?publicationDT)
+      FILTER(!BOUND(?position2EndDT) || ?position2EndDT >= ?publicationDT)
+      FILTER NOT EXISTS {
+        ?organization obo:BFO_0000051*/vivo:relatedBy  ?position2 
+      }
+      ?collabOrg a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?collabOrg .
+      }
+      ?collabOrg obo:BFO_0000051*/vivo:relatedBy ?position2 .
+     
+    } GROUP BY ?organization ?collabOrg
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?collabOrg rdfs:label ?collabOrgLabel .
+}  ORDER BY ?orgLabel DESC(?publicationCount) ?collabOrgLabel
+""" ;
+   :resultFormat "CSV" .
+
+:top_venues_for_publications_by_organization a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Top venues for publications by organization" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?publisherLabel ?publicationCount 
+WHERE {
+  {
+    SELECT DISTINCT ?organization ?publisher (COUNT(DISTINCT ?publication) as ?publicationCount) 
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position .
+      ?position vivo:relates ?person .
+      ?person a foaf:Person .
+      ?person vivo:relatedBy/vivo:relates ?publication .
+      ?publication vivo:publisher ?publisher .
+      VALUES ?publicationType {
+        bibo:Document bibo:Journal 
+      }
+      ?publication a ?publicationType .
+      ?publication vivo:dateTimeValue/vivo:dateTime ?publicationDT .
+      OPTIONAL {
+        ?position vivo:dateTimeInterval ?dti .
+        ?dti vivo:start/vivo:dateTime ?positionStartDT .
+        OPTIONAL {
+          ?dti vivo:end/vivo:dateTime ?positionEndDT .
+        }
+      }
+      FILTER(!BOUND(?positionStartDT) || ?positionStartDT <= ?publicationDT)
+      FILTER(!BOUND(?positionEndDT) || ?positionEndDT >= ?publicationDT)
+     
+    } GROUP BY ?organization ?publisher
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?publisher rdfs:label ?publisherLabel .
+}  ORDER BY DESC(?publicationCount) ?orgLabel  ?publisherLabel
+""" ;
+   :resultFormat "CSV" .
+
+:sum_of_total_award_amount_by_research_area_and_person a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Sum of total award amount by research area and person" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?organizationLabel ?personLabel ?areaLabel ?total
+WHERE {
+  {
+    SELECT ?organization ?area ?person (SUM(xsd:integer(STR(?amount))) AS ?total)
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position .
+      ?position a vivo:Position .
+      ?position vivo:relates ?person .
+      ?person a foaf:Person .
+      ?person obo:RO_0000053 ?investigatorship .
+      ?investigatorship a vivo:InvestigatorRole .
+      ?investigatorship vivo:relatedBy ?grant .
+      ?grant a vivo:Grant .
+      ?grant vivo:totalAwardAmount ?amount .
+      ?grant vivo:hasSubjectArea ?area .
+    } GROUP BY ?organization ?person ?area 
+  }
+  ?area rdfs:label ?areaLabel .
+  ?person rdfs:label ?personLabel .
+  ?organization rdfs:label ?organizationLabel .
+} ORDER BY ?area DESC(?total) ?personLabel
+""" ;
+   :resultFormat "CSV" .
+
+:organization_collaboration_with_ogranizations_on_grants a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "Organization Collaboration with ogranizations on grants" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?orgLabel ?grantCount ?collabOrgLabel
+WHERE {
+  {
+    SELECT DISTINCT ?organization ?collabOrg (COUNT(DISTINCT ?grant) as ?grantCount) 
+    WHERE {
+      ?organization a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?organization .
+      }
+      ?organization obo:BFO_0000051*/vivo:relatedBy ?position1 .
+      ?position1 a vivo:Position .
+      ?position1 vivo:relates ?person1 .
+      ?person1 a foaf:Person .
+      ?person1 obo:RO_0000053/vivo:relatedBy ?grant .
+      ?grant a vivo:Grant .
+      ?person2 obo:RO_0000053/vivo:relatedBy ?grant .
+      ?person2 a foaf:Person .
+      FILTER(?person1 != ?person2)
+      ?position2 vivo:relates ?person2 .
+      ?position2 a vivo:Position .
+      ?grant vivo:dateTimeInterval ?dti .
+      ?dti vivo:start/vivo:dateTime ?startTime .
+      ?dti vivo:end/vivo:dateTime ?endTime .
+      OPTIONAL {
+        ?position1 vivo:dateTimeInterval ?dti1 .
+        ?dti1 vivo:start/vivo:dateTime ?position1StartDT .
+        OPTIONAL {
+          ?dti1 vivo:end/vivo:dateTime ?position1EndDT .
+        }
+      }
+      FILTER(!BOUND(?position1StartDT) || ?position1StartDT <= ?endTime)
+      FILTER(!BOUND(?position1EndDT) || ?position1EndDT >= ?startTime)
+      OPTIONAL {
+        ?position2 vivo:dateTimeInterval ?dti2 .
+        ?dti2 vivo:start/vivo:dateTime ?position2StartDT .
+        OPTIONAL {
+          ?dti2 vivo:end/vivo:dateTime ?position2EndDT .
+        }
+      }
+      FILTER(!BOUND(?position2StartDT) || ?position2StartDT <= ?endTime)
+      FILTER(!BOUND(?position2EndDT) || ?position2EndDT >= ?startTime)
+      FILTER NOT EXISTS {
+        ?organization obo:BFO_0000051*/vivo:relatedBy ?position2 
+      }
+      ?collabOrg a foaf:Organization .
+      FILTER NOT EXISTS {
+        ?superiorOrg obo:BFO_0000051 ?collabOrg .
+      }
+      ?collabOrg obo:BFO_0000051*/vivo:relatedBy ?position2 .
+     
+    } GROUP BY ?organization ?collabOrg
+  }
+  ?organization rdfs:label ?orgLabel .
+  ?collabOrg rdfs:label ?collabOrgLabel .
+} 
+ORDER BY ?orgLabel DESC(?grantCount) ?collabOrgLabel
+""" ;
+   :resultFormat "CSV" .

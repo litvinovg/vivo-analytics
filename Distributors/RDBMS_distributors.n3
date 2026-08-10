@@ -1,0 +1,1518 @@
+@prefix : <http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationSetup#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
+
+:RDBMS a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS" ;
+   :query """
+SELECT ?name
+WHERE
+{
+  {
+    BIND("RDBMS_Geolocation" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Scopus" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonAddress" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Grant" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Citation" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentPresentation" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationAddress" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Orcid" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentResearchArea" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_EventGeolocation" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonTelephone" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Organization" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_GrantResearchArea" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Volume" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DOI" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Advisorship" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_EventDateTimeInterval" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentHierarchy" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationTelephone" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentPageStart" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonEmail" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Document" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonPosition" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Researcher" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Authorship" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Event" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_GrantGeofocus" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonResearchArea" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Issue" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationGeolocation" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PersonWebsite" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_ISSN" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Investigatorship" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_EventResearchArea" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentPageEnd" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationHierarchy" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Publisher" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationEmail" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_PositionDateTimeInterval" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_DocumentDateTime" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_GrantAssigner" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_GrantDateTimeInterval" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_ResearchArea" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_GrantHierarchy" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_ISBN" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_OrganizationWebsite" as ?name) 
+  }
+  UNION
+  {
+    BIND("RDBMS_Person" as ?name) 
+  }
+}
+""" ;
+   :resultFormat "CSV" .
+
+:RDBMS_Geolocation a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Geolocation" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(STR(?geolocation) as ?geolocation_id)
+?name
+WHERE {
+  ?geolocation a vivo:GeographicLocation .
+  ?geolocation rdfs:label ?name .
+  ?s obo:RO_0001025|vivo:geographicFocus ?geolocation .
+} ORDER BY ?geolocation
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Scopus a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Scopus" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+?scopus_id
+(STR(?person) as ?person_id)
+WHERE {
+  ?person a foaf:Person .
+  ?person vivo:scopusId ?scopus_id .
+} ORDER BY ?person
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PersonAddress a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonAddress" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo: <http://aims.fao.org/aos/geopolitical.owl#>
+SELECT DISTINCT
+(STR(?address) as ?address_id)
+(STR(?person) as ?person_id)
+?street_address
+?postal_code
+?country
+WHERE {
+
+  ?person a foaf:Person .
+  ?person obo:ARG_2000028/vcard:hasAddress ?address .
+  
+  OPTIONAL {
+    ?address vcard:streetAddress ?street_address .
+  }  
+  OPTIONAL {
+    ?address vcard:country ?country .
+  }  
+  OPTIONAL {
+    ?address vcard:postalCode ?postal_code .
+  }  
+} ORDER BY ?person
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Grant a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Grant" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(STR(?grant) as ?grant_id)
+(STR(?grant) as ?subgrant_id)
+
+?name
+(STR(?totalAwardAmount) as ?total_award_amount)
+(STR(?sponsor) as ?sponsor_award_id)
+WHERE
+{
+  ?grant a vivo:Grant .
+  ?grant rdfs:label ?name.
+  OPTIONAL {
+    ?grant vivo:totalAwardAmount ?totalAwardAmount .
+  }
+  OPTIONAL {
+    ?grant vivo:sponsorAwardId ?sponsor .
+  }
+} ORDER BY ?grant
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Citation a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Citation" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX c4o:      <http://purl.org/spar/c4o/>
+
+SELECT DISTINCT
+(STR(?citations) as ?citations_id)
+(STR(?document) as ?document_id)
+?number
+?source
+WHERE
+{
+  ?document c4o:hasGlobalCitationFrequency ?citations .
+  ?document a bibo:Document .
+  ?citations c4o:hasGlobalCountValue ?number .
+  ?citations c4o:hasGlobalCountSource/rdfs:label ?source .
+  
+} ORDER BY ?citations
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DocumentPresentation a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentPresentation" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?event))) as ?document_presentation_id)
+(STR(?event) as ?event_id)
+(STR(?document) as ?document_id)
+
+WHERE {
+  ?document bibo:presentedAt ?event .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationAddress a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationAddress" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo: <http://aims.fao.org/aos/geopolitical.owl#>
+SELECT DISTINCT
+(STR(?address) as ?address_id)
+(STR(?organization) as ?organization_id)
+?street_address
+?postal_code
+?country
+WHERE {
+  
+  ?organization a foaf:Organization .
+  ?organization obo:ARG_2000028/vcard:hasAddress ?address .
+  OPTIONAL {
+    ?address vcard:streetAddress ?street_address .
+  }  
+  OPTIONAL {
+    ?address vcard:country ?country .
+  }  
+  OPTIONAL {
+    ?address vcard:postalCode ?postal_code .
+  }  
+} ORDER BY ?organization
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Orcid a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Orcid" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?orcId) as ?orcid)
+(STR(?person) as ?person_id)
+WHERE {
+  ?person a foaf:Person .
+  ?person vivo:orcidId ?orcId . 
+} ORDER BY ?person
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DocumentResearchArea a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentResearchArea" ;
+   :query """
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(SHA1(STR(STR(?researchArea) + STR(?document))) as ?document_research_area_id)
+(STR(?document) as ?document_id)
+(STR(?researchArea) as ?research_area_id)
+WHERE
+{
+  ?document vivo:hasSubjectArea ?researchArea .
+  { ?document a bibo:Document .}
+  UNION
+  { ?document a bibo:Journal .}
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_EventGeolocation a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_EventGeolocation" ;
+   :query """
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT DISTINCT
+(SHA1(STR(STR(?event) + STR(?geoLocation))) as ?event_geolocation_id)
+(STR(?event) as ?event_id)
+(STR(?geoLocation) as ?geolocation_id)
+WHERE {
+  ?event obo:RO_0001025 ?geoLocation .
+  ?event a <http://purl.org/NET/c4dm/event.owl#Event>
+}
+""" ;
+   :resultFormat "CSV" .
+
+:RDBMS_PersonTelephone a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonTelephone" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?tel) + STR(?tel_lit))) as ?telephone_id)
+(?tel_lit as ?telephone)
+(STR(?person) as ?person_id)
+WHERE {
+  {
+    ?person a foaf:Person .
+    ?person obo:ARG_2000028/vcard:hasTelephone ?tel .
+  } 
+  ?tel vcard:telephone ?tel_lit .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Organization a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Organization" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(STR(?organizationUri) as ?organization_id)
+?abbreviation
+?name
+(STR(?organizationType) as ?organization_type)
+WHERE {
+  ?organizationUri a foaf:Organization .
+  ?organizationUri rdfs:label ?name .
+  OPTIONAL { ?organizationUri vivo:abbreviation ?abbreviation . }
+  ?organizationUri vitro:mostSpecificType ?organizationType .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_GrantResearchArea a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_GrantResearchArea" ;
+   :query """
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(SHA1(STR(STR(?researchArea) + STR(?grant))) as ?grant_research_area_id)
+(STR(?grant) as ?grant_id)
+(STR(?researchArea) as ?research_area_id)
+WHERE
+{
+  ?grant vivo:hasSubjectArea ?researchArea .
+  ?grant a vivo:Grant .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Volume a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Volume" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?volumeLt))) as ?volume_id)
+(?volumeLt as ?volume)
+(STR(?document) as ?document_id)
+WHERE {
+  ?document bibo:volume ?volumeLt .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DOI a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DOI" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?doiLt))) as ?doi_id)
+(?doiLt as ?doi)
+(STR(?document) as ?document_id)
+WHERE {
+  ?document bibo:doi ?doiLt .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Advisorship a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Advisorship" ;
+   :query """
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
+SELECT
+(STR(?role) as ?advisorship_id)
+(STR(?advisor) as ?advisor_id)
+?advising_relationship_type
+(STR(?advisee) as ?advisee_id) 
+WHERE
+{
+ ?role a vivo:AdvisorRole .
+ ?advisor ^obo:RO_0000052 ?role  .
+ ?role vivo:relatedBy ?relationship .
+ ?relationship vitro:mostSpecificType ?mst .
+ ?mst rdfs:label ?advising_relationship_type .
+ ?relationship vivo:relates ?advisee .
+ ?advisee a foaf:Person .
+  FILTER (?advisee != ?advisor)
+} ORDER BY ?role
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DocumentHierarchy a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentHierarchy" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?part))) as ?document_hierarchy_id)
+(STR(?document) as ?document_id)
+(STR(?part) as ?subdocument_id)
+WHERE {
+  ?part a bibo:Document .
+  ?part obo:BFO_0000050 ?document .
+} ORDER BY ?document
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationTelephone a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationTelephone" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?tel) + STR(?tel_lit))) as ?telephone_id)
+(?tel_lit as ?telephone)
+(STR(?organization) as ?organization_id)
+WHERE {
+  {
+    ?organization a foaf:Organization .
+    ?organization obo:ARG_2000028/vcard:hasTelephone ?tel .
+  }
+  ?tel vcard:telephone ?tel_lit .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DocumentPageStart a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentPageStart" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?ps))) as ?page_start_id)
+(?ps as ?start)
+(STR(?document) as ?document_id)
+WHERE {
+  ?document bibo:pageStart ?ps .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PersonEmail a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonEmail" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?emailUri) + STR(?emailLit))) as ?email_id)
+(?emailLit as ?email)
+(STR(?person) as ?person_id)
+WHERE {
+    ?person a foaf:Person .
+    ?person obo:ARG_2000028/vcard:hasEmail ?emailUri .
+    ?emailUri vcard:email ?emailLit .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Document a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Document" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vitro:    <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+SELECT DISTINCT
+(STR(?document) as ?document_id)
+(STR(?document) as ?subdocument_id)
+?abbreviation 
+(?label as ?title)
+(?mstLabel as ?document_type)
+WHERE
+{
+  { ?document a bibo:Document .}
+  UNION
+  { ?document a bibo:Journal .}
+  ?document rdfs:label ?label .
+  OPTIONAL {
+    ?document vivo:abbreviation ?abbreviation .
+  }
+  ?document vitro:mostSpecificType ?mst .
+  ?mst rdfs:label ?mstLabel .
+} ORDER BY ?document
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PersonPosition a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonPosition" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vitro:    <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+SELECT DISTINCT
+(STR(?organization) as ?organization_id)
+(STR(?position) as ?position_id)
+(STR(?person) as ?person_id)
+(?positionlabel as ?position_name)
+(STR(?cleanStartDateValue) as ?start_date)
+(STR(?cleanEndDateValue) as ?end_date)
+WHERE {
+    ?person vivo:relatedBy ?position .
+    ?person a foaf:Person .
+    ?organization vivo:relatedBy ?position .
+    ?position a vivo:Position .
+    ?organization a foaf:Organization .
+    ?position vitro:mostSpecificType ?positionMst .
+    ?positionMst rdfs:label ?positionlabel .
+  OPTIONAL {
+    ?position vivo:dateTimeInterval ?dti .
+    ?dti vivo:start ?start .
+    ?start vivo:dateTime ?startDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?startDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?startDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?startDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourPrecision
+          }, SUBSTR(str(?startDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision
+          }, SUBSTR(str(?startDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?startDtv), 1, 19), 1/0)
+      ) AS ?cleanStartDateValue
+    )
+  }
+  OPTIONAL {
+    ?position vivo:dateTimeInterval ?dti .
+    ?dti vivo:end ?end .
+    ?end vivo:dateTime ?endDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?endDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?endDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?endDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourPrecision
+          }, SUBSTR(str(?endDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision
+          }, SUBSTR(str(?endDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?endDtv), 1, 19), 1/0)
+      ) AS ?cleanEndDateValue
+    )
+  }
+}
+ORDER BY ?dti
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Researcher a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Researcher" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+?researcher_id
+(STR(?person) as ?person_id)
+WHERE {
+  ?person a foaf:Person .
+  ?person vivo:researcherId ?researcher_id . 
+} ORDER BY ?person
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Authorship a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Authorship" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?authorship) as ?authorship_id)
+(COALESCE(?rank, 1) as ?order_number)
+(STR(?person) as ?person_id)
+(STR(?document) as ?document_id)
+WHERE {
+  ?authorship a vivo:Authorship .
+  OPTIONAL {
+      ?authorship vivo:rank ?rank .
+  }
+  ?authorship vivo:relates ?person .
+  ?person a foaf:Person .
+  ?authorship vivo:relates ?document .
+  {?document a bibo:Document .}
+UNION
+  { ?document a bibo:Journal .}
+} ORDER BY ?authorship
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Event a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Event" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?event) as ?event_id)
+(?label as ?name)
+?abbreviation
+(GROUP_CONCAT(?contact_info; SEPARATOR = "; ") as ?contact_information)
+WHERE {
+  ?event a event:Event .
+  ?event rdfs:label ?label .
+  OPTIONAL {
+    ?event vivo:abbreviation ?abbreviation .
+  }
+  OPTIONAL {
+    ?event vivo:contactInformation ?contact_info .
+  }
+} GROUP BY ?event ?label ?abbreviation ?geoLocation
+ORDER BY ?event
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_GrantGeofocus a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_GrantGeofocus" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?grant) + STR(?geographicFocus))) as ?grant_geofocus_id)
+(STR(?grant) as ?grant_id)
+(STR(?geographicFocus) as ?geolocation_id)
+WHERE
+{
+  ?grant a vivo:Grant .
+  ?grant vivo:geographicFocus ?geographicFocus .
+} ORDER BY ?grant
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PersonResearchArea a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonResearchArea" ;
+   :query """
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(SHA1(STR(STR(?researchArea) + STR(?person))) as ?person_research_area_id)
+(STR(?person) as ?person_id)
+(STR(?researchArea) as ?research_area_id)
+WHERE
+{
+  ?person vivo:hasResearchArea ?researchArea .
+  ?researchArea rdfs:label ?label .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Issue a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Issue" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?issueLt))) as ?issue_id)
+(?issueLt as ?issue)
+(STR(?document) as ?document_id)
+WHERE {
+  ?document bibo:issue ?issueLt .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationGeolocation a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationGeolocation" ;
+   :query """
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT DISTINCT
+(SHA1(STR(STR(?organization) + STR(?geoLocation))) as ?organization_geolocation_id)
+(STR(?organization) as ?organization_id)
+(STR(?geoLocation) as ?geolocation_id)
+WHERE {
+  ?organization obo:RO_0001025 ?geoLocation .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PersonWebsite a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PersonWebsite" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?urlUri) + STR(?URL))) as ?url_id)
+(?URL as ?url)
+(STR(?person) as ?person_id)
+WHERE {
+    ?person a foaf:Person .
+    ?person obo:ARG_2000028/vcard:hasURL ?urlUri .
+  ?urlUri vcard:url ?URL .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_ISSN a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_ISSN" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+SELECT DISTINCT
+(SHA1(STR(STR(?journal) + STR(?issnLt))) as ?issn_id)
+(?issnLt as ?issn)
+(STR(?journal) as ?document_id)
+WHERE {
+  ?journal bibo:issn ?issnLt .
+  ?journal a bibo:Journal .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Investigatorship a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Investigatorship" ;
+   :query """
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?role) as ?investigatorship_id)
+(STR(?person) as ?person_id)
+(STR(?mst) as ?investigatorship_type)
+(STR(?grant) as ?grant_id)
+WHERE
+{
+  ?role a vivo:InvestigatorRole .
+  ?role vitro:mostSpecificType ?mst .
+  ?role obo:RO_0000052 ?person .
+  ?role vivo:relatedBy ?grant .
+} ORDER BY ?investigatorship_id
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_EventResearchArea a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_EventResearchArea" ;
+   :query """
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(SHA1(STR(STR(?researchArea) + STR(?event))) as ?event_research_area_id)
+(STR(?event) as ?event_id)
+(STR(?researchArea) as ?research_area_id)
+WHERE
+{
+  ?event vivo:hasSubjectArea ?researchArea .
+  ?event a <http://purl.org/NET/c4dm/event.owl#Event> .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_DocumentPageEnd a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentPageEnd" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?pe))) as ?page_end_id)
+(?pe as ?end)
+(STR(?document) as ?document_id)
+WHERE {
+  ?document bibo:pageEnd ?pe .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationHierarchy a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationHierarchy" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?organization) + STR(?part))) as ?organization_hierarchy_id)
+(STR(?organization) as ?organization_id)
+(STR(?part) as ?suborganization_id)
+WHERE {
+  ?part a foaf:Organization .
+  ?part obo:BFO_0000050? ?organization .
+} ORDER BY ?organization
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Publisher a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Publisher" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?organization))) as ?publisher_id)
+(STR(?document) as ?document_id)
+(STR(?organization) as ?organization_id)
+WHERE {
+  {
+   ?document a bibo:Journal .
+  }
+  UNION
+  {
+   ?document a bibo:Document .
+  }
+   ?document vivo:publisher ?organization .
+} ORDER BY ?publisher_id
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationEmail a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationEmail" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?emailUri) + STR(?emailLit))) as ?email_id)
+(?emailLit as ?email)
+(STR(?organization) as ?organization_id)
+WHERE {
+    ?organization a foaf:Organization .
+    ?organization obo:ARG_2000028/vcard:hasEmail ?emailUri .
+    ?emailUri vcard:email ?emailLit .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_GrantAssigner a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_GrantAssigner" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?grant) + STR(?org))) as ?grant_assigner_id)
+(STR(?grant) as ?grant_id)
+(STR(?org) as ?organization_id)
+WHERE {
+  ?grant a vivo:Grant .
+  ?grant vivo:assignedBy ?org .
+  ?org a foaf:Organization .
+} ORDER BY ?grant
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_ResearchArea a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_ResearchArea" ;
+   :query """
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?researchArea) as ?research_area_id)
+(STR(?label) as ?research_area_name)
+
+WHERE
+{
+   ?s vivo:hasSubjectArea|vivo:hasResearchArea ?researchArea .
+   ?researchArea rdfs:label ?label .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_GrantHierarchy a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_GrantHierarchy" ;
+   :query """
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?grant) + STR(?part))) as ?grant_hierarchy_id)
+(STR(?grant) as ?grant_id)
+(STR(?part) as ?subgrant_id)
+WHERE {
+  ?part a vivo:Grant .
+  ?part obo:BFO_0000050 ?grant .
+} ORDER BY ?grant
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_ISBN a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_ISBN" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(SHA1(STR(STR(?document) + STR(?isbnLt))) as ?isbn_id)
+(?isbnLt as ?isbn)
+(STR(?document) as ?document_id)
+WHERE {
+    ?document bibo:isbn10|bibo:isbn13 ?isbnLt .
+  ?document a bibo:Document .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_OrganizationWebsite a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_OrganizationWebsite" ;
+   :query """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+SELECT DISTINCT
+(SHA1(STR(STR(?urlUri) + STR(?URL))) as ?url_id)
+(?URL as ?url)
+(STR(?organization) as ?organization_id)
+WHERE {
+    ?organization a foaf:Organization .
+    ?organization obo:ARG_2000028/vcard:hasURL ?urlUri .
+  ?urlUri vcard:url ?URL .
+}
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_Person a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_Person" ;
+   :query """
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?person) as ?person_id)
+?firstname
+?other_name
+?lastname
+WHERE {
+  ?person a foaf:Person .
+  ?person obo:ARG_2000028/vcard:hasName/vcard:familyName ?lastname .
+  ?person obo:ARG_2000028/vcard:hasName/vcard:givenName ?firstname .
+  OPTIONAL {
+    ?person obo:ARG_2000028/vcard:hasName/vivo:middleName ?other_name .
+  } 
+} ORDER BY ?person
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_GrantDateTimeInterval a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_GrantDateTimeInterval" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?dti) as ?date_time_interval_id)
+(STR(?grant) as ?grant_id)
+(STR(?cleanStartDateValue) as ?start_date)
+(STR(?cleanEndDateValue) as ?end_date)
+WHERE {
+  ?grant a vivo:Grant .
+  ?grant vivo:dateTimeInterval ?dti .
+   OPTIONAL {
+    ?dti vivo:start ?start .
+    ?start vivo:dateTime ?startDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?startDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?startDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?startDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?startDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?startDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?startDtv), 1, 19), 1/0)
+      ) AS ?cleanStartDateValue
+    )
+  }
+  
+  OPTIONAL {
+    ?dti vivo:end ?end .
+    ?end vivo:dateTime ?endDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?endDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?endDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?endDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?endDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?endDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?endDtv), 1, 19), 1/0)
+      ) AS ?cleanEndDateValue
+    )
+  }
+}
+ORDER BY ?dti
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_PositionDateTimeInterval a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_PositionDateTimeInterval" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?dti) as ?date_time_interval_id)
+(STR(?position) as ?position_id)
+(STR(?cleanStartDateValue) as ?start_date)
+(STR(?cleanEndDateValue) as ?end_date)
+WHERE {
+  ?person obo:RO_0000053 ?position .
+  ?position vivo:dateTimeInterval ?dti .
+  OPTIONAL {
+    ?dti vivo:start ?start .
+    ?start vivo:dateTime ?startDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?startDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?startDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?startDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?startDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?startDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?startDtv), 1, 19), 1/0)
+      ) AS ?cleanStartDateValue
+    )
+  }
+  
+  OPTIONAL {
+    ?dti vivo:end ?end .
+    ?end vivo:dateTime ?endDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?endDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?endDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?endDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?endDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?endDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?endDtv), 1, 19), 1/0)
+      ) AS ?cleanEndDateValue
+    )
+  }
+}
+ORDER BY ?dti
+""" ;
+   :resultFormat "CSV" .
+:RDBMS_EventDateTimeInterval a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_EventDateTimeInterval" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT DISTINCT
+(STR(?dti) as ?date_time_interval_id)
+(STR(?event) as ?event_id)
+(STR(?cleanStartDateValue) as ?start_date)
+(STR(?cleanEndDateValue) as ?end_date)
+WHERE {
+  ?event a event:Event .
+  ?event vivo:dateTimeInterval ?dti .
+  OPTIONAL {
+    ?dti vivo:start ?start .
+    ?start vivo:dateTime ?startDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?startDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?startDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?startDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?startDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?startDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?start vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?startDtv), 1, 19), 1/0)
+      ) AS ?cleanStartDateValue
+    )
+  }
+  
+  OPTIONAL {
+    ?dti vivo:end ?end .
+    ?end vivo:dateTime ?endDtv .
+    BIND (
+      COALESCE(
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearPrecision 
+          }, SUBSTR(str(?endDtv), 1, 4), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthPrecision 
+          }, SUBSTR(str(?endDtv), 1, 7), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+          }, SUBSTR(str(?endDtv), 1, 10), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+          }, SUBSTR(str(?endDtv), 1, 13), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+          }, SUBSTR(str(?endDtv), 1, 16), 1/0),
+        IF(EXISTS{
+            ?end vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+          }, SUBSTR(str(?endDtv), 1, 19), 1/0)
+      ) AS ?cleanEndDateValue
+    )
+  }
+}
+ORDER BY ?dti
+""" ;
+   :resultFormat "CSV" .
+
+:RDBMS_DocumentDateTime a <java:edu.cornell.library.scholars.webapp.controller.api.distribute.DataDistributor> , <java:edu.cornell.library.scholars.webapp.controller.api.distribute.rdf.SelectFromContentDistributor> ;
+   :actionName "RDBMS_DocumentDateTime" ;
+   :query """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX ev: <http://www.w3.org/2001/xml-events/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+
+SELECT DISTINCT
+(STR(?date) as ?date_time_id)
+(STR(?document) as ?document_id)
+(STR(?cleanDateValue) as ?date_time)
+WHERE {
+  { ?document a bibo:Document .}
+  UNION
+  { ?document a bibo:Journal .}
+  ?document vivo:dateTimeValue ?date .
+  ?date vivo:dateTime ?dtv .
+  BIND (
+    COALESCE(
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearMonthPrecision 
+        }, SUBSTR(str(?dtv), 1, 7), 1/0),
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearPrecision 
+        }, SUBSTR(str(?dtv), 1, 4), 1/0),
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearMonthDayPrecision 
+        }, SUBSTR(str(?dtv), 1, 10), 1/0),
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearMonthDayHourPrecision 
+        }, SUBSTR(str(?dtv), 1, 13), 1/0),
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearMonthDayHourMinutePrecision 
+        }, SUBSTR(str(?dtv), 1, 16), 1/0),
+      IF(EXISTS{
+          ?date vivo:dateTimePrecision vivo:yearMonthDayTimePrecision 
+        }, SUBSTR(str(?dtv), 1, 19), 1/0)
+    ) AS ?cleanDateValue
+  )
+  
+}
+ORDER BY ?date
+""" ;
+   :resultFormat "CSV" .
